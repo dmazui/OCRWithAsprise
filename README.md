@@ -1,5 +1,5 @@
 "# OCRWithAsprise" 
 
-java
-maven
+java, 
+maven, 
 asprise api (free trial)
