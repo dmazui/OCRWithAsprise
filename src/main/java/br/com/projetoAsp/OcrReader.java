@@ -3,21 +3,20 @@ package br.com.projetoAsp;
 import java.io.File;
 import com.asprise.ocr.Ocr;
 
-public class OcrReader {
+public class OCRReader {
 	
 	private String arquivo;
 	private String idioma;
 	
 	public Ocr ocr = new Ocr();
 
-	public OcrReader() {
+	public OCRReader() {
 		super();
-		Ocr.setUp();
+		this.idioma = "por";
 	}
 
-	public OcrReader(String arquivo, String idioma) {
+	public OCRReader(String arquivo, String idioma) {
 		super();
-		Ocr.setUp();
 		this.arquivo = arquivo;
 		this.idioma = idioma;
 	} 
@@ -37,21 +36,29 @@ public class OcrReader {
 	public void setIdioma(String idioma) {
 		this.idioma = idioma;
 	}
-
 		
-	public String getText() {		
-		return getText(this.arquivo);
+	public String getTexto() {		
+		return getTexto(this.arquivo);
 	}
 
-	public String getText(String arquivo) {		
-		return getText(arquivo,this.idioma);
+	public String getTexto(String arquivo) {		
+		return getTexto(arquivo,this.idioma);
 	}
 	
-	public String getText(String arquivo, String idioma) {		
+	public String getTexto(String arquivo, String idioma) {
+		return getTexto(new File(arquivo), idioma);
+	}
+	
+	public String getTexto(File arquivo) {		
+		return getTexto(arquivo, this.idioma);
+	}
+	
+	public String getTexto(File arquivo, String idioma) {		
 		ocr.startEngine(idioma, Ocr.SPEED_SLOW);
-		String s = ocr.recognize(new File[] {new File(arquivo)},
+		String s = ocr.recognize(new File[] {arquivo},
 				  Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
 		ocr.stopEngine();
 		return s;
 	}
+	
 }
